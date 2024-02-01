@@ -31,9 +31,9 @@ export const DataUser = ({ state, setState }) => {
                 height="25px"
                 bgcolor="#ffffff"
                 textcolor="#181616"
-                fontsize="11px"
-                translateX="-60px"
-                translateY="-25px"
+                textosize="11px"
+                translatex="-60px"
+                translatey="-25px"
             />
             <span className='nombre'>{user.name}</span>
             {
