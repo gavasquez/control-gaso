@@ -7,10 +7,12 @@ import styled from "styled-components";
 import { Sidebar } from './components/organismos/sidebar/Sidebar';
 import { Device } from './styles/breakpoints';
 import { Menuambur } from './components/organismos/Menuambur';
+import { useLocation } from "react-router-dom";
 
 export const ThemeContext = createContext(null);
 
 function App() {
+  const { pathname } = useLocation();
   const [theme, setTheme] = useState("light");
   const themeStyle = theme === 'light' ? Light : Dark;
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,17 +21,24 @@ function App() {
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <ThemeProvider theme={themeStyle}>
         <AuthContextProvider>
-          <Container className={sidebarOpen ? "active" : ""}>
-            <div className='ContentSidebar'>
-              <Sidebar state={sidebarOpen} setState={setSidebarOpen} />
-            </div>
-            <div className='ContentMenuambur'>
-              <Menuambur />
-            </div>
-            <Containerbody>
-              <MyRoutes />
-            </Containerbody>
-          </Container>
+          {
+            pathname != "/login"
+              ? (
+                <Container className={sidebarOpen ? "active" : ""}>
+                  <div className='ContentSidebar'>
+                    <Sidebar state={sidebarOpen} setState={setSidebarOpen} />
+                  </div>
+                  <div className='ContentMenuambur'>
+                    <Menuambur />
+                  </div>
+                  <Containerbody>
+                    <MyRoutes />
+                  </Containerbody>
+                </Container>
+              )
+              : (<MyRoutes />)
+          }
+
         </AuthContextProvider>
       </ThemeProvider>
     </ThemeContext.Provider>
