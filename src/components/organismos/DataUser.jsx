@@ -56,6 +56,7 @@ padding: 8px;
 border-radius: 50px;
 margin: 15px;
 cursor: pointer;
+z-index: 4;
 .imgContainer{
     height: 40px;
     width: 40px;

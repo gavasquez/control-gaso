@@ -14,16 +14,20 @@ import { useUsuariosStore } from './store/UsuariosStore';
 export const ThemeContext = createContext( null );
 
 function App() {
+
+  const { mostrarUsuarios, dataUsuarios } = useUsuariosStore();
+
+  const theme = dataUsuarios.tema === '0' ? 'light' : 'dark';
+
   const { pathname } = useLocation();
-  const [ theme, setTheme ] = useState( "light" );
+  /* const [ theme, setTheme ] = useState( "light" ); */
   const themeStyle = theme === 'light' ? Light : Dark;
   const [ sidebarOpen, setSidebarOpen ] = useState( false );
 
-  const { mostrarUsuarios } = useUsuariosStore();
 
   const { isLoading, error } = useQuery( {
     queryKey: [ 'mostrarUsuarios' ],
-    queryFn:  () =>  mostrarUsuarios(),
+    queryFn: () => mostrarUsuarios(),
   } );
 
   if ( isLoading ) {
@@ -35,7 +39,7 @@ function App() {
   }
 
   return (
-    <ThemeContext.Provider value={ { theme, setTheme } }>
+    <ThemeContext.Provider value={ { theme } }>
       <ThemeProvider theme={ themeStyle }>
         <AuthContextProvider>
           {

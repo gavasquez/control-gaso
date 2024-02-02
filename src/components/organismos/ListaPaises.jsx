@@ -5,6 +5,7 @@ import iso from "iso-country-currency";
 import { ConvertirCapitalize } from '../../utils/Conversiones';
 import { useState } from 'react';
 import { Device } from '../../styles/breakpoints';
+import { BtnCerrar } from '../atomos/BtnCerrar';
 
 export const ListaPaises = ( { setSelect, setState } ) => {
 
@@ -20,25 +21,25 @@ export const ListaPaises = ( { setSelect, setState } ) => {
     setDataResult( filtrado );
   };
 
-  const seleccionar = (parametro) => {
-    setSelect(parametro);
+  const seleccionar = ( parametro ) => {
+    setSelect( parametro );
     setState();
-  }
+  };
 
   return (
     <Container>
       <header className='header'>
         <span>Busca tu país</span>
-        <span className='close' onClick={ setState }>{ <v.iconocerrar /> }</span>
+        <BtnCerrar funcion={ setState } />
       </header>
       <InputBuscadorLista onChange={ buscar } placeholder='Buscar...' />
       {
         dataResult.length > 0 &&
         dataResult.map( ( item, index ) => {
           return (
-            <ItemContainer key={index} onClick={()=> seleccionar(item)}>
-              <span>{item.countryName}</span>
-              <span>{item.symbol}</span>
+            <ItemContainer key={ index } onClick={ () => seleccionar( item ) }>
+              <span>{ item.countryName }</span>
+              <span>{ item.symbol }</span>
             </ItemContainer>
           );
         } )
@@ -54,13 +55,14 @@ top: 88%;
 width: 100%;
 display: flex;
 flex-direction: column;
-background: ${(props) => props.theme.bgtotal};
+background: ${ ( props ) => props.theme.bgtotal };
 border-radius: 10px;
 border: 3px solid #3a3a3a;
 padding: 10px;
 gap: 10px;
-color: ${(props) => props.theme.text};
-@media ${Device.tablet} {
+color: ${ ( props ) => props.theme.text };
+z-index: 3;
+@media ${ Device.tablet } {
   width: 400px;
 }
 .header{
@@ -68,15 +70,6 @@ color: ${(props) => props.theme.text};
   align-items: center;
   justify-content: space-between;
   background: inherit;
-  .close{
-    cursor: pointer;
-    font-size: 25px;
-    transition: all 0.2s;
-    &:hover{
-      color: ${v.colorselector};
-      transform: scale(1.2);
-    }
-  }
 }
 `;
 

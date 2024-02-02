@@ -5,6 +5,9 @@ import { Selector } from '../organismos/Selector';
 import { v } from '../../styles/Variables';
 import { ListaPaises } from '../organismos/ListaPaises';
 import { useUsuariosStore } from '../../store/UsuariosStore';
+import { ListaGenerica } from '../moleculas/ListaGenerica';
+import { TemasData } from '../../utils/dataEstatica';
+import { BtnSave } from '../moleculas/BtnSave';
 
 export const ConfiguracionTemplate = () => {
 
@@ -14,21 +17,42 @@ export const ConfiguracionTemplate = () => {
 
   const [ stateListaPaises, setStateListaPaises ] = useState( false );
 
-  const { dataUsuarios } = useUsuariosStore();
-
+  const { dataUsuarios, editarTemaMonedaUsr } = useUsuariosStore();
+  //* Pais Moneda
   const moneda = select.symbol ? select.symbol : dataUsuarios.moneda;
   const pais = select.countryName ? select.countryName : dataUsuarios.pais;
   const paisSeleccionado = "🐷 " + moneda + " " + pais;
+  //* Tema
+  const [ selectTema, setSelectTema ] = useState( [] );
+  const [ stateListaTemas, setstateListaTemas ] = useState( false );
+  const iconobd = dataUsuarios.tema === "0" ? "🌞" : "🌑";
+  const temabd = dataUsuarios.tema === "0" ? "light" : "dark";
+  const temainicial = selectTema.tema ? selectTema.tema : temabd;
+  const iconoInicial = selectTema.icono ? selectTema.icono : iconobd;
+
+  const temaSeleccionado = iconoInicial + " " + temainicial;
+
+  //* Funcion editar
+
+  const editar = async () => {
+    const temaElegido = selectTema.descripcion === 'light' ? "0" : "1";
+    const parametros = {
+      tema: temaElegido,
+      moneda: moneda,
+      pais: pais,
+      id: dataUsuarios.id
+    };
+    await editarTemaMonedaUsr( parametros );
+  };
+
 
   return (
     <Container>
       <header className='header'>
         <Header state={ state } setState={ setState } />
       </header>
-      <section className='area1'>
-        <h1>Ajustes</h1>
-      </section>
       <section className='area2'>
+        <h1>AJUSTES</h1>
         <ContentCard>
           <span>Moneda:</span>
           <Selector
@@ -48,8 +72,39 @@ export const ConfiguracionTemplate = () => {
           }
 
         </ContentCard>
-      </section>
-      <section className='main'>
+        <ContentCard>
+          <span>Tema</span>
+          <Selector
+            texto1={ temaSeleccionado }
+            color={ v.colorselector }
+            state={ stateListaTemas }
+            funcion={ () => setstateListaTemas( !stateListaTemas ) }
+          />
+          {
+            stateListaTemas &&
+            (
+              <ListaGenerica
+                data={ TemasData }
+                setState={ () => setstateListaTemas( !stateListaTemas ) }
+                funcion={ setSelectTema }
+              />
+            )
+          }
+        </ContentCard>
+
+        {
+          !stateListaTemas && !stateListaPaises &&
+          (
+            <BtnSave
+              titulo='Guardar'
+              bgcolor={ () => v.colorselector }
+              icon={ <v.iconoguardar /> }
+              funcion={ editar }
+            />
+          )
+        }
+
+
       </section>
     </Container>
   );
@@ -62,30 +117,26 @@ width: 100%;
 background: ${ ( props ) => props.theme.bgtotal };
 color: ${ ( { theme } ) => theme.text };
 display: grid;
-
-grid-template: "header" 100px "area1" 100px "area2" 50px "main" auto;
+grid-template: "header" 100px "area2" auto ;
 .header {
   grid-area: header;
-  background: rgba(103,93,241,0.14);
-  display: flex;
-  align-items: center;
-}
-.area1 {
-  grid-area: area1;
-  background: rgba(229,67,26,0.14);
+ /*  background: rgba(103,93,241,0.14); */
   display: flex;
   align-items: center;
 }
 .area2 {
   grid-area: area2;
-  background: rgba(77,237,106,0.14);
   display: flex;
+  flex-direction: column;
+  justify-content: start;
   align-items: center;
+  gap: 30px;
+  align-self: center;
+  h1{
+    font-size: 3rem;
+  }
 }
-.main{
-  grid-area: main;
-  background: rgba(179,46,241,0.14);
-}`;
+`;
 const ContentCard = styled.div`
 display: flex;
 text-align: center;
