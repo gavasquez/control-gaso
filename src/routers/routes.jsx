@@ -4,6 +4,7 @@ import { Home } from "../pages/Home";
 import { ProtectedRoute } from "../hooks/ProtectedRoute";
 import { UserAuth } from "../context/AuthContext";
 import { Configuracion } from "../pages/Configuracion";
+import { Categorias } from '../pages/Categorias';
 
 export const MyRoutes = () => {
 
@@ -16,6 +17,7 @@ export const MyRoutes = () => {
                 <Route element={<ProtectedRoute user={user} redirectTo="/login" />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/configurar" element={<Configuracion />} />
+                    <Route path="/categorias" element={<Categorias />} />
                 </Route>
             </Routes>
     )

@@ -8,14 +8,14 @@ import { SidebarCard } from './SidebarCard';
 export const Sidebar = ({ state, setState }) => {
 
   return (
-    <Main isOpen={state}>
+    <Main $isOpen={state}>
       <span
         className='Sidebarbutton'
         onClick={() => setState(!state)}
       >
         {<v.iconoflechaderecha />}
       </span>
-      <Container isOpen={state} className={state ? 'active' : ''}>
+      <Container $isOpen={state} className={state ? 'active' : ''}>
         <div className='Logocontent'>
           <div className='imgcontent'>
             <img src={v.logo} />
@@ -104,14 +104,14 @@ overflow-x: hidden;
     width: 30px;
     cursor: pointer;
     transition:  all 0.5s ease-in-out;
-    transform: ${({ isOpen }) => (isOpen ? `scale(0.7)` : `scale(1.5)`)} rotate(${(props) => props.theme.logorotate});
+    transform: ${({ $isOpen }) => ($isOpen ? `scale(0.7)` : `scale(1.5)`)} rotate(${(props) => props.theme.logorotate});
     img {
       width: 100%;
       animation: flotar 1.7s ease-in-out alternate;
     }
   }
   h2 {
-    display: ${({ isOpen }) => isOpen ? 'block' : 'none'}
+    display: ${({ $isOpen }) => $isOpen ? 'block' : 'none'}
   }
   @keyframes flotar {
     0% {
@@ -188,7 +188,7 @@ const Main = styled.div`
    justify-content: center;
    cursor: pointer;
    transition: all 0.2s;
-   transform: ${({ isOpen }) => (isOpen ? `translateX(162px) rotate(3.142rad)` : `initial`)};
+   transform: ${({ $isOpen }) => ($isOpen ? `translateX(162px) rotate(3.142rad)` : `initial`)};
 }
 `;
 

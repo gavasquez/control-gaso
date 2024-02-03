@@ -10,6 +10,7 @@ import { Menuambur } from './components/organismos/Menuambur';
 import { useLocation } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 import { useUsuariosStore } from './store/UsuariosStore';
+import { Login } from './pages/Login';
 
 export const ThemeContext = createContext( null );
 
@@ -17,7 +18,7 @@ function App() {
 
   const { mostrarUsuarios, dataUsuarios } = useUsuariosStore();
 
-  const theme = dataUsuarios.tema === '0' ? 'light' : 'dark';
+  const theme = dataUsuarios?.tema === '0' ? 'light' : 'dark';
 
   const { pathname } = useLocation();
   /* const [ theme, setTheme ] = useState( "light" ); */
@@ -57,7 +58,7 @@ function App() {
                   </Containerbody>
                 </Container>
               )
-              : ( <MyRoutes /> )
+              : ( <Login /> )
           }
 
         </AuthContextProvider>
