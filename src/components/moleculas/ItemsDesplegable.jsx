@@ -1,15 +1,17 @@
-import React from 'react'
+import React from 'react';
 import styled from "styled-components";
 import { Icono } from '../atomos/Icono';
+import { ColorContent } from '../atomos/ColorContent';
 
-export const ItemsDesplegable = ({ item, funcion }) => {
+export const ItemsDesplegable = ( { item, funcion } ) => {
   return (
-    <Container onClick={funcion}>
-      <Icono>{item.icono}</Icono>
-      <span>{item.text}</span>
+    <Container onClick={ funcion }>
+      <Icono>{ item.icono }</Icono>
+      <ColorContent $ancho="12px" $alto="12px" $color={ item.color } />
+      <span>{ item.text }</span>
     </Container>
-  )
-}
+  );
+};
 const Container = styled.div`
 cursor: pointer;
 padding: 8px;
@@ -18,7 +20,7 @@ display: flex;
 align-items: center;
 gap: 10px;
 &:hover{
-    background-color: ${(props) => props.theme.bg4};
+    background-color: ${ ( props ) => props.theme.bg4 };
 }
 svg{
     font-size: 28px;
